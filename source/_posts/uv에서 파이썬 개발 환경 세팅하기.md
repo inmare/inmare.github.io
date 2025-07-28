@@ -63,7 +63,7 @@ uv export -o requirements.txt
 
 ## 중간에 다른 버전 Python으로 바꾸기
 
-pyproject.toml에서 버전 변경
+`pyproject.toml`에서 버전 변경
 
 ```toml
 requires-python = ">=3.12"
