@@ -1,0 +1,10 @@
+<h2>카테고리 목록</h2>
+<ul>
+  <% site.categories.each(function(category) { %>
+    <li>
+      <a href="<%= url_for(category.path) %>">
+        <%= category.name %> (<%= category.length %>)
+      </a>
+    </li>
+  <% }); %>
+</ul>

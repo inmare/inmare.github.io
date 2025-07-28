@@ -12,6 +12,7 @@ info: "배운 것을 기록합니다"
 #menu
 menu:
   Archives: /archives
+  Category: /categories
 
 #index/main page max show posts (in number)
 max_post: 10
