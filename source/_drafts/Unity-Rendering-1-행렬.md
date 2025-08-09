@@ -1,12 +1,18 @@
 ---
-title: Unity 렌더링 1 - 행렬
-tags:
+title: Unity Rendering 1 - 행렬
+categories: [Unity]
+tags: [Unity, graphics]
+mathjax: true
+date: 2025-08-09T16:35:01
 ---
+
 
 - [3D 변환 행렬](#3d-변환-행렬)
 - [Orthogrpahic 카메라](#orthogrpahic-카메라)
 - [Perspective 카메라](#perspective-카메라)
   - [Focal length](#focal-length)
+
+catlikecoding님의 [튜토리얼](https://catlikecoding.com/unity/tutorials/rendering/part-1/) 번역입니다.
 
 # 3D 변환 행렬
 
@@ -52,7 +58,8 @@ $w$의 값은 1이어야 하는데, 그 이유는 행렬 연산을 했을 때 of
 
 Orthographic 카메라는 3D 공간을 2D 평면으로 투영할 때, 원근 효과 없이 평행하게 투영하는 방식이다.
 
-![Orthographic projection](2025-08-08T180913.png)
+
+![Orthographic projection](/images/Unity-Rendering-1-행렬/2025-08-08T180913.png)
 
 이를 행렬로 구현하려면 한 차원의 값을 0으로 설정하면 된다.  
 예를 들어 아래의 행렬에서는 z의 값을 0으로 설정해 xy평면에 물체를 투영한다.  
@@ -71,7 +78,7 @@ $$
 
 위의 방식은 현실처럼 멀리있는 물체를 더 작게 보주지 못하기 때문에 Perspective 카메라를 사용한다.
 
-![2025-08-08T181603](2025-08-08T181603.png)
+![Perspective projection](/images/Unity-Rendering-1-행렬/2025-08-08T181603.png)
 
 이를 구현하려면 위의 행렬에서 w의 값을 z가 되도록 행렬을 변경하면 된다.
 
