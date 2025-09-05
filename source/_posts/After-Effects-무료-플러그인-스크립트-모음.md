@@ -43,7 +43,7 @@ date: 2025-09-05 09:47:33
   - [LayerNode](#layernode)
   - [레이어 추가 스크립트](#레이어-추가-스크립트)
   - [Mask Transform](#mask-transform)
-- [AutoGuide_v2](#autoguide_v2)
+  - [AutoGuide_v2](#autoguide_v2)
 - [프리셋](#프리셋)
   - [Glow Plus](#glow-plus)
   - [AEJuice 효과들](#aejuice-효과들)
@@ -282,7 +282,7 @@ Shape, Text, Null레이어등을 빠르게 추가할 수 있는 ui패널을 만�
 
 마스크를 제어할 수 있는 효과를 레이어에 추가하는 스크립트.
 
-# AutoGuide_v2
+## AutoGuide_v2
 
 [다운로드](https://cubezeero.gumroad.com/l/ae-autoguide)
 
