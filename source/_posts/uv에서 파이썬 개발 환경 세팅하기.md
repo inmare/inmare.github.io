@@ -14,6 +14,7 @@ tags: [Python, uv]
 - [기타 명령어](#기타-명령어)
   - [requirements.txt 생성](#requirementstxt-생성)
   - [중간에 다른 버전 Python으로 바꾸기](#중간에-다른-버전-python으로-바꾸기)
+  - [requirements.txt에서 라이브러리 설치](#requirementstxt에서-라이브러리-설치)
 - [vscode에서 실행하는 법](#vscode에서-실행하는-법)
 - [참고](#참고)
 
@@ -73,6 +74,12 @@ requires-python = ">=3.12"
 
 ```bash
 uv python pin 3.12
+```
+
+## requirements.txt에서 라이브러리 설치
+
+```bash
+uv pip install -r requirements.txt
 ```
 
 # vscode에서 실행하는 법
