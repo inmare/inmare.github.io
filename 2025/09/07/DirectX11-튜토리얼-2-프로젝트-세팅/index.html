@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>DirectX11 튜토리얼 2 프로젝트 세팅</title>
+  
+  <link rel="canonical" href="http://example.com/2025/09/07/DirectX11-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%84%B8%ED%8C%85/">
+  
+  <meta name="description" content="DirectX를 렌더링 하기 위해서는 이를 창에 표현하기 위한 framework가 필요하다. 여기에서는 최소한의 기능만을 구현한 framework를 만든다. 대략적인 framework의 구조는 아래와 같다. WinMain     - SystemClass     ">
+  
+  
+  <meta name="author" content="inmare">
+  
+  
+  
+  <meta property="og:site_name" content="Logging" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="DirectX11 튜토리얼 2 프로젝트 세팅" />
+  
+  <meta property="og:description" content="DirectX를 렌더링 하기 위해서는 이를 창에 표현하기 위한 framework가 필요하다. 여기에서는 최소한의 기능만을 구현한 framework를 만든다. 대략적인 framework의 구조는 아래와 같다. WinMain     - SystemClass     ">
+  
+  <meta property="og:url" content="http://example.com/2025/09/07/DirectX11-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%84%B8%ED%8C%85/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DirectX11 튜토리얼 2 프로젝트 세팅">
+  
+  <meta name="twitter:description" content="DirectX를 렌더링 하기 위해서는 이를 창에 표현하기 위한 framework가 필요하다. 여기에서는 최소한의 기능만을 구현한 framework를 만든다. 대략적인 framework의 구조는 아래와 같다. WinMain     - SystemClass     ">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2025/09/07/DirectX11-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%84%B8%ED%8C%85/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/BookkMyungjo_Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <!-- <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link rel="preload" href="/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/D2Coding-Ver1.3.2-20180524.ttf" as="font" type="font/ttf" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="darkmode">
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div>📸</div>
+      <!-- <div onclick="setDarkMode(true)" id="darkBtn">
+        
+      </div>
+      <div onclick="setDarkMode(false)" id="lightBtn" class="hidden">
+        
+      </div>
+      <script>
+        if (localStorage.getItem("preferredTheme") == "dark") {
+          setDarkMode(true);
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById("darkBtn");
+          var lightBtn = document.getElementById("lightBtn");
+          if (isDark) {
+            lightBtn.style.display = "block";
+            darkBtn.style.display = "none";
+            localStorage.setItem("preferredTheme", "dark");
+          } else {
+            lightBtn.style.display = "none";
+            darkBtn.style.display = "block";
+            localStorage.removeItem("preferredTheme");
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script> -->
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">Inmare</h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+         
+        <a href="/archives" class="ml">Archives</a>
+          
+        <a href="/categories" class="ml">Category</a>
+          
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem" />
+  </div>
+</div>
+
+        <div class="trans">
+            <h1>DirectX11 튜토리얼 2 프로젝트 세팅</h1>
+
+  <p>DirectX를 렌더링 하기 위해서는 이를 창에 표현하기 위한 framework가
+필요하다.<br />
+여기에서는 최소한의 기능만을 구현한 framework를 만든다.</p>
+<p>대략적인 framework의 구조는 아래와 같다.</p>
+<pre class="language-none"><code class="language-none">WinMain
+    - SystemClass
+        - InputClass
+        - ApplicationClass</code></pre>
+<ul>
+<li><code>WinMain</code>: <code>SystemClass</code>를 포함한 전체
+application이 돌아가는 곳</li>
+<li><code>InputClass</code>: 사용자 입력을 다루는 클래스</li>
+<li><code>ApplicationClass</code>: DirectX 그래픽 코드를 다루는
+클래스</li>
+</ul>
+<h1 id="winmain">WinMain</h1>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// main.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"systemclass.h"</span><span class="token expression"><span class="token punctuation">;</span></span></span>
+
+<span class="token keyword">int</span> WINAPI <span class="token function">WinMain</span><span class="token punctuation">(</span>HINSTANCE hInstance<span class="token punctuation">,</span> HINSTANCE hPrevInstance<span class="token punctuation">,</span> PSTR pScmdline<span class="token punctuation">,</span> <span class="token keyword">int</span> iCmdshow<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	SystemClass<span class="token operator">*</span> System<span class="token punctuation">;</span>
+	<span class="token keyword">bool</span> result<span class="token punctuation">;</span>
+
+	<span class="token comment">// 새로운 system object 생성</span>
+	System <span class="token operator">=</span> <span class="token keyword">new</span> SystemClass<span class="token punctuation">;</span>
+
+	<span class="token comment">// object를 초기화하고 작동시킴</span>
+	result <span class="token operator">=</span> System<span class="token operator">-></span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+        <span class="token comment">// Run에서 모든 애니메이션 관련 코드 실행</span>
+		System<span class="token operator">-></span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// system을 shutdown하고 release함</span>
+	System<span class="token operator">-></span><span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">delete</span> System<span class="token punctuation">;</span>
+	System <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h1 id="systemclass">SystemClass</h1>
+<h2 id="헤더">헤더</h2>
+<ul>
+<li>Initialize: 윈도우 생성, InputClass, ApplicationClass 생성 및
+초기화</li>
+<li>Shutdown: 생성된 클래스들 소멸 및 윈도우 파괴</li>
+<li>Run: 윈도우가 닫히기 전까지 윈도우 메세지 처리 및 application
+loop에서 실질적인 렌더링 처리</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_SYSTEMCLASS_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_SYSTEMCLASS_H_</span></span>
+
+<span class="token comment">// 불필요한 Win32 헤더파일 제거용</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">WIN32_LEAN_AND_MEAN</span></span>
+
+<span class="token comment">// 윈도우 생성, 파괴 및 다른 함수 사용 용도</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;windows.h></span></span>
+
+<span class="token comment">// 직접 생성할 클래스들</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"inputclass.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"applicationclass.h"</span></span>
+
+<span class="token comment">// SystemClass 및 main.cpp에서 사용하는 Initialize, Shutdown, Run등 정의</span>
+<span class="token keyword">class</span> <span class="token class-name">SystemClass</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> SystemClass<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token operator">~</span><span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">bool</span> <span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">Run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 윈도우 시스템 메세지를 읽을 함수 정의</span>
+	LRESULT CALLBACK <span class="token function">MessageHandler</span><span class="token punctuation">(</span>HWND<span class="token punctuation">,</span> UINT<span class="token punctuation">,</span> WPARAM<span class="token punctuation">,</span> LPARAM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">bool</span> <span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">InitializeWindows</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">ShutdownWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	LPCWSTR m_applicationName<span class="token punctuation">;</span>
+	HINSTANCE m_hinstance<span class="token punctuation">;</span>
+	HWND m_hwnd<span class="token punctuation">;</span>
+
+	<span class="token comment">// input, application을 관리할 포인터</span>
+	InputClass<span class="token operator">*</span> m_Input<span class="token punctuation">;</span>
+	ApplicationClass<span class="token operator">*</span> m_Application<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 윈도우 시스템 메세지를 클래스 내부로 보낼 함수, 변수</span>
+<span class="token keyword">static</span> LRESULT CALLBACK <span class="token function">WndProc</span><span class="token punctuation">(</span>HWND<span class="token punctuation">,</span> UINT<span class="token punctuation">,</span> WPARAM<span class="token punctuation">,</span> LPARAM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> SystemClass<span class="token operator">*</span> ApplicationHandle <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">// _SYSTEMCLASS_H_</span></span></code></pre>
+<h1 id="소스">소스</h1>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"systemclass.h"</span><span class="token expression"><span class="token punctuation">;</span></span></span>
+
+<span class="token comment">// object pointer를 생성할 때 null로 설정,</span>
+<span class="token comment">// shutdown시에 없는 object로 인식하고 없애도록 함</span>
+<span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	m_Input <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	m_Application <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 복사 생성자</span>
+<span class="token comment">// 사용하지 않지만 정의해서 복사 방지</span>
+<span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> SystemClass<span class="token operator">&amp;</span> other<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 소멸자</span>
+<span class="token comment">// 정의는 해두지만 실제 작업은 Shutdown()함수에서 처리</span>
+<span class="token comment">// 윈도우에서는 실제로 함수 호출이 안되는 경우가 있음</span>
+<span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">SystemClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 초기화 함수</span>
+<span class="token keyword">bool</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> screenWidth<span class="token punctuation">,</span> screenHeight<span class="token punctuation">;</span>
+	<span class="token keyword">bool</span> result<span class="token punctuation">;</span>
+
+	screenWidth <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	screenHeight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 윈도우 api 초기화</span>
+	<span class="token function">InitializeWindows</span><span class="token punctuation">(</span>screenWidth<span class="token punctuation">,</span> screenHeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// input object 생성 후 초기화</span>
+	<span class="token comment">// 키보드 입력을 담당함</span>
+	m_Input <span class="token operator">=</span> <span class="token keyword">new</span> InputClass<span class="token punctuation">;</span>
+	m_Input<span class="token operator">-></span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// application class object 생성 후 초기화</span>
+	m_Application <span class="token operator">=</span> <span class="token keyword">new</span> ApplicationClass<span class="token punctuation">;</span>
+
+	result <span class="token operator">=</span> m_Application<span class="token operator">-></span><span class="token function">Initialize</span><span class="token punctuation">(</span>screenWidth<span class="token punctuation">,</span> screenHeight<span class="token punctuation">,</span> m_hwnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 정리를 담당하는 함수</span>
+<span class="token keyword">void</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token comment">// applicaion class object 정리</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>m_Application<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		m_Application<span class="token operator">-></span><span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">delete</span> m_Application<span class="token punctuation">;</span>
+		m_Application <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">// input object 정리</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>m_Input<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">delete</span> m_Input<span class="token punctuation">;</span>
+		m_Input <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// window 정리</span>
+	<span class="token function">ShutdownWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	MSG msg<span class="token punctuation">;</span>
+	<span class="token keyword">bool</span> done<span class="token punctuation">,</span> result<span class="token punctuation">;</span>
+
+	<span class="token comment">// message 구조 초기화</span>
+	<span class="token function">ZeroMemory</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>MSG<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	done <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token comment">// quit message가 윈도우나 사용자한테 오기 전까지 루프 실행</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>done<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token comment">// 윈도우 message 관리</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">PeekMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> PM_REMOVE<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token function">TranslateMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">DispatchMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>msg<span class="token punctuation">.</span>message <span class="token operator">==</span> WM_QUIT<span class="token punctuation">)</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token comment">// 윈도우가 닫으라는 신호를 보내면 나가기</span>
+			done <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">else</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token comment">// 그렇지 않은 경우에는 계속 frame 처리</span>
+			result <span class="token operator">=</span> <span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span>
+			<span class="token punctuation">&#123;</span>
+				done <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Frame 함수: application에 대한 모든 처리가 이루어지는 곳</span>
+<span class="token comment">// 사용자의 입력을 통해서 그만둘지 여부를 판단함</span>
+<span class="token keyword">bool</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">bool</span> result<span class="token punctuation">;</span>
+
+	<span class="token comment">// 사용자가 esc키를 눌렀는지 판단</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>m_Input<span class="token operator">-></span><span class="token function">IsKeyDown</span><span class="token punctuation">(</span>VK_ESCAPE<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">// frame processing</span>
+	result <span class="token operator">=</span> m_Application<span class="token operator">-></span><span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 입력 받은 key의 값을 처리하는 MessageHandler 함수</span>
+<span class="token comment">// CALLBACK은 윈도우 시스템이 함수를 직접 호출하기 위한 규악을 따른다는 의미</span>
+<span class="token comment">// 운영체제가 필요할 때 이 함수를 부를 수 있게 됨</span>
+LRESULT CALLBACK <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">MessageHandler</span><span class="token punctuation">(</span>HWND hwnd<span class="token punctuation">,</span> UINT umsg<span class="token punctuation">,</span> WPARAM wparam<span class="token punctuation">,</span> LPARAM lparam<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">switch</span> <span class="token punctuation">(</span>umsg<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token comment">// keydown 처리</span>
+		<span class="token keyword">case</span> WM_KEYDOWN<span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			m_Input<span class="token operator">-></span><span class="token function">KeyDown</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>wparam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// keyup 처리</span>
+		<span class="token keyword">case</span> WM_KEYUP<span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			m_Input<span class="token operator">-></span><span class="token function">KeyUp</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>wparam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// 그외에는 사용하지 않기에 default message handler에 보내줌</span>
+		<span class="token keyword">default</span><span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> <span class="token function">DefWindowProc</span><span class="token punctuation">(</span>hwnd<span class="token punctuation">,</span> umsg<span class="token punctuation">,</span> wparam<span class="token punctuation">,</span> lparam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">InitializeWindows</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> screenWidth<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> screenHeight<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	WNDCLASSEX wc <span class="token operator">=</span> <span class="token function">WNDCLASSEX</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	DEVMODE dmScreenSettings<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> posX<span class="token punctuation">,</span> posY<span class="token punctuation">;</span>
+
+	<span class="token comment">// 이 object의 외부 pointer를 가져옴</span>
+	<span class="token comment">// 이를 통해서 외부함수인 WinProc에서 클래스와 소통할 수 있는 주소를 제공해 줌</span>
+	ApplicationHandle <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token comment">// application에 instance 할당</span>
+	m_hinstance <span class="token operator">=</span> <span class="token function">GetModuleHandle</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">// application에 이름 부여</span>
+	m_applicationName <span class="token operator">=</span> L<span class="token string">"Engine"</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 기본적인 윈도우 세팅</span>
+	wc<span class="token punctuation">.</span>style <span class="token operator">=</span> CS_HREDRAW <span class="token operator">|</span> CS_VREDRAW <span class="token operator">|</span> CS_OWNDC<span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>lpfnWndProc <span class="token operator">=</span> WndProc<span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>cbClsExtra <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>cbWndExtra <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>hInstance <span class="token operator">=</span> m_hinstance<span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>hIcon <span class="token operator">=</span> wc<span class="token punctuation">.</span>hIcon<span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>hCursor <span class="token operator">=</span> <span class="token function">LoadCursor</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">,</span> IDC_ARROW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>hbrBackground <span class="token operator">=</span> <span class="token punctuation">(</span>HBRUSH<span class="token punctuation">)</span><span class="token function">GetStockObject</span><span class="token punctuation">(</span>BLACK_BRUSH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>lpszMenuName <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>lpszClassName <span class="token operator">=</span> m_applicationName<span class="token punctuation">;</span>
+	wc<span class="token punctuation">.</span>cbSize <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>WNDCLASSEX<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 윈도우 클래스를 등록하기</span>
+	<span class="token function">RegisterClassEx</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>wc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">// 클라이언트 데스크탑 화면 크기</span>
+	screenWidth <span class="token operator">=</span> <span class="token function">GetSystemMetrics</span><span class="token punctuation">(</span>SM_CXSCREEN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	screenHeight <span class="token operator">=</span> <span class="token function">GetSystemMetrics</span><span class="token punctuation">(</span>SM_CYSCREEN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 전체화면일 때와 아닐 때의 스크린 설정 결정</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>FULL_SCREEN<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">// 전체화면이면 스크린 크기를 데스크탑 화면 크기로 설정하고 32bit로 설정</span>
+		<span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>dmScreenSettings<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>dmScreenSettings<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		dmScreenSettings<span class="token punctuation">.</span>dmSize <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>dmScreenSettings<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		dmScreenSettings<span class="token punctuation">.</span>dmPelsWidth <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span>screenWidth<span class="token punctuation">;</span>
+		dmScreenSettings<span class="token punctuation">.</span>dmPelsHeight <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span>screenHeight<span class="token punctuation">;</span>
+		dmScreenSettings<span class="token punctuation">.</span>dmBitsPerPel <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+		dmScreenSettings<span class="token punctuation">.</span>dmFields <span class="token operator">=</span> DM_BITSPERPEL <span class="token operator">|</span> DM_PELSWIDTH <span class="token operator">|</span> DM_PELSHEIGHT<span class="token punctuation">;</span>
+
+		<span class="token comment">// display 설정을 전체 화면으로 변경</span>
+		<span class="token function">ChangeDisplaySettings</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>dmScreenSettings<span class="token punctuation">,</span> CDS_FULLSCREEN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment">// 윈도우 위치를 왼쪽 위로 설정</span>
+		posX <span class="token operator">=</span> posY <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">else</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token comment">// 전체화면이 아닌경우 윈도우를 화면 중앙에 800x600크기로 생성</span>
+		screenWidth <span class="token operator">=</span> <span class="token number">800</span><span class="token punctuation">;</span>
+		screenHeight <span class="token operator">=</span> <span class="token number">600</span><span class="token punctuation">;</span>
+
+		posX <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">GetSystemMetrics</span><span class="token punctuation">(</span>SM_CXSCREEN<span class="token punctuation">)</span> <span class="token operator">-</span> screenWidth<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+		posY <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">GetSystemMetrics</span><span class="token punctuation">(</span>SM_CYSCREEN<span class="token punctuation">)</span> <span class="token operator">-</span> screenHeight<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 스크린 설정을 가진 윈도우 식별자(handle) 생성하기</span>
+	m_hwnd <span class="token operator">=</span> <span class="token function">CreateWindowEx</span><span class="token punctuation">(</span>WS_EX_APPWINDOW<span class="token punctuation">,</span> m_applicationName<span class="token punctuation">,</span> m_applicationName<span class="token punctuation">,</span>
+							WS_CLIPSIBLINGS <span class="token operator">|</span> WS_CLIPCHILDREN <span class="token operator">|</span> WS_POPUP<span class="token punctuation">,</span>
+							posX<span class="token punctuation">,</span> posY<span class="token punctuation">,</span> screenWidth<span class="token punctuation">,</span> screenHeight<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> m_hinstance<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 윈도우를 화면 중앙에 가져오고 포커스 맞추기</span>
+	<span class="token function">ShowWindow</span><span class="token punctuation">(</span>m_hwnd<span class="token punctuation">,</span> SW_SHOW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">SetForegroundWindow</span><span class="token punctuation">(</span>m_hwnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">SetFocus</span><span class="token punctuation">(</span>m_hwnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 마우스 커서 숨기기</span>
+	<span class="token function">ShowCursor</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">SystemClass</span><span class="token double-colon punctuation">::</span><span class="token function">ShutdownWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token comment">// 마우스 커서 보이기</span>
+	<span class="token function">ShowCursor</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// 전체화면 모드일 경우 디스플레이 설정 고치기</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>FULL_SCREEN<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token function">ChangeDisplaySettings</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 윈도우 제거</span>
+	<span class="token function">DestroyWindow</span><span class="token punctuation">(</span>m_hwnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	m_hwnd <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// application 인스턴스 제거</span>
+	<span class="token function">UnregisterClass</span><span class="token punctuation">(</span>m_applicationName<span class="token punctuation">,</span> m_hinstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	m_hinstance <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// class를 향하는 pointer 초기화</span>
+	ApplicationHandle <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 윈도우 메세지를 처리하는 함수를 SystemClass 파일 내부에 작성해서 코드를 깔끔하게 유지함</span>
+LRESULT CALLBACK <span class="token function">WndProc</span><span class="token punctuation">(</span>HWND hwnd<span class="token punctuation">,</span> UINT umessage<span class="token punctuation">,</span> WPARAM wparam<span class="token punctuation">,</span> LPARAM lparam<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">switch</span> <span class="token punctuation">(</span>umessage<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token comment">// 윈도우 파괴시</span>
+		<span class="token keyword">case</span> WM_DESTROY<span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token function">PostQuitMessage</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// 윈도우가 닫힐때</span>
+		<span class="token keyword">case</span> WM_CLOSE<span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token function">PostQuitMessage</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// 다른 메세지는 SystemClass의 message handler로 보내짐</span>
+		<span class="token keyword">default</span><span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> ApplicationHandle<span class="token operator">-></span><span class="token function">MessageHandler</span><span class="token punctuation">(</span>hwnd<span class="token punctuation">,</span> umessage<span class="token punctuation">,</span> wparam<span class="token punctuation">,</span> lparam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h1 id="inputclass">InputClass</h1>
+<p>InputClass는 window input(나중에 DirectInput 사용 예정)을 사용해서
+어떠한 키가 입력되는지 체크한다.</p>
+<h2 id="헤더-1">헤더</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_INPUTCLASS_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_INPUTCLASS_H_</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">InputClass</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> InputClass<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token operator">~</span><span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">void</span> <span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">void</span> <span class="token function">KeyDown</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">KeyUp</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">bool</span> <span class="token function">IsKeyDown</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">bool</span> m_keys<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">// ! _INPUTCLASS_H_</span></span></code></pre>
+<h2 id="소스-1">소스</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"inputclass.h"</span></span>
+
+<span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> InputClass<span class="token operator">&amp;</span> other<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">InputClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+	<span class="token comment">// 모든 키가 눌리지 않았다고 초기화</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">256</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		m_keys<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">KeyDown</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> input<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	m_keys<span class="token punctuation">[</span>input<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">KeyUp</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> input<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	m_keys<span class="token punctuation">[</span>input<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">InputClass</span><span class="token double-colon punctuation">::</span><span class="token function">IsKeyDown</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> key<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> m_keys<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h1 id="applicationclass">ApplicationClass</h1>
+<p>ApplicationClass는 모든 그래픽 기능을 담당하고, 전체화면 같은 변경할
+수 있는 그래픽 관련 설정을 헤더에 저장한 뒤 관리한다.</p>
+<h2 id="헤더-2">헤더</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_APPLICATIONCLASS_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_APPLICATIONCLASS_H_</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;windows.h></span></span>
+
+<span class="token comment">// 전역 설정들</span>
+<span class="token keyword">const</span> <span class="token keyword">bool</span> FULL_SCREEN <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">bool</span> VSYNC_ENABLED <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">float</span> SCREEN_DEPTH <span class="token operator">=</span> <span class="token number">1000.0f</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">float</span> SCREEN_NEAR <span class="token operator">=</span> <span class="token number">0.3f</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ApplicationClass</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> ApplicationClass<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token operator">~</span><span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">bool</span> <span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> HWND<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">bool</span> <span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">bool</span> <span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">// !_APPLICATIONCLASS_H_</span></span></code></pre>
+<h2 id="소스-2">소스</h2>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"applicationclass.h"</span></span>
+
+<span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> ApplicationClass<span class="token operator">&amp;</span> other<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">ApplicationClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token keyword">int</span> screenWidth<span class="token punctuation">,</span> <span class="token keyword">int</span> screenHiehgt<span class="token punctuation">,</span> HWND hwnd<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">Shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">Frame</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ApplicationClass</span><span class="token double-colon punctuation">::</span><span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h1 id="결과">결과</h1>
+<p>위의 코드를 실행하면 검은 색 창이 뜨고, 이를 esc키로 닫을 수
+있다.</p>
+
+  <p><a class="classtest-link" href="/tags/DirectX/" rel="tag">DirectX</a>, <a class="classtest-link" href="/tags/graphics/" rel="tag">graphics</a> — 2025년 9월 7일</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>검색</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="포스트 제목 입력"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>
