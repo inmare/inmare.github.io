@@ -4,7 +4,15 @@ categories: [Unity]
 tags: [Unity, graphics]
 ---
 
-- [들어가면서](#들어가면서)
+- [프로젝트 설정 방법](#프로젝트-설정-방법)
+- [렌더링의 과정](#렌더링의-과정)
+- [Shader](#shader)
+  - [컴파일된 셰이더 확인하기](#컴파일된-셰이더-확인하기)
+- [기본적인 셰이더](#기본적인-셰이더)
+- [Vertex to Fragment](#vertex-to-fragment)
+- [UV](#uv)
+- [WarpMode](#warpmode)
+- [Mipmap과 Filtering](#mipmap과-filtering)
 
 Unity 2022 LTS 버전을 기준으로 해서 프로젝트를 진행했다.
 
